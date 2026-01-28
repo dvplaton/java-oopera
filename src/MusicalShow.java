@@ -19,7 +19,6 @@ public class MusicalShow extends Show {
     @Override
     public void printListOfActors() {
         super.printListOfActors();
-        System.out.println("Композитор: " + musicAuthor.name + " " + musicAuthor.surname);
-        System.out.println("---");
+        System.out.println("Композитор: " + musicAuthor.getName() + " " + musicAuthor.getSurname());
     }
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Show {
     protected String title;
@@ -19,14 +20,10 @@ public class Show {
 
     public void printListOfActors() {
         System.out.println("---" + title + "---");
-        System.out.println("В ролях:");
         for (Actor actor : listOfActors) {
-            System.out.println(actor.toString());
+            System.out.println(actor);
         }
-        System.out.println("---");
-        System.out.println("Режиссёр постановщик:");
         printDirectorInfo();
-        System.out.println("---");
     }
 
     public void addNewActor(Actor newActor) {
@@ -37,18 +34,37 @@ public class Show {
             }
         }
         listOfActors.add(newActor);
-        System.out.println(newActor.surname + " будет играть в " + title);
+        System.out.println(newActor + " будет играть в " + title);
     }
 
     public void changeActor(Actor newActor, String dismissedSurname) {
+        int aCount = 0;
+        int aIndex = 0;
         for (Actor actor : listOfActors) {
-            if (actor.surname.equals(dismissedSurname)) {
-                listOfActors.remove(actor);
-                listOfActors.add(newActor);
-                System.out.println(newActor.surname + " заменяет " + actor.surname);
-                return;
+            if (actor.getSurname().equals(dismissedSurname)) {
+                aIndex = listOfActors.indexOf(actor);
+                aCount++;
             }
         }
-        System.out.println(dismissedSurname + " не задействован в " + title);
+        if (aCount < 1) {
+            System.out.println(dismissedSurname + " не задействован в " + title);
+        } else if (aCount == 1) {
+            System.out.println(newActor.getSurname() + " заменяет " + listOfActors.get(aIndex));
+            listOfActors.remove(aIndex);
+            listOfActors.add(newActor);
+        } else {
+            System.out.println("Которого уволить?");
+            for (Actor actor : listOfActors) {
+                if (actor.getSurname().equals(dismissedSurname)) {
+                    System.out.println("Чтобы уволить [ " + actor + " ] нажмите " + listOfActors.indexOf(actor));
+                }
+            }
+            Scanner scanner = new Scanner(System.in);
+            aIndex = scanner.nextInt();
+            System.out.println(newActor.getSurname() + " заменяет " + listOfActors.get(aIndex));
+            listOfActors.remove(aIndex);
+            listOfActors.add(newActor);
+            scanner.close();
+        }
     }
 }
